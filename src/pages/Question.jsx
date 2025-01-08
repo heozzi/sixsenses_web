@@ -34,14 +34,17 @@ function Qustion() {
   const navigate = useNavigate();
   const location = useLocation();
   const nickname = location.state.nickname;
+
+
   const [answer,setAnswer] = useState("");
+  const [checked,setChecked] = useState(0); // 0=대기,1=오답,2=정답
   const [alldata,setAlldata] = useState("")
   const [question,setQuestion] = useState({
     meaning : "어릴 때부터 같이 놀던 가까운 친구",
     word : "죽마고우",
     hanja : "竹馬故友"
   });
-  const [checked,setChecked] = useState(0);
+  
   
   // 문제 정답 여부 체크 
   function onSubmitHandler(evt) {
@@ -119,7 +122,8 @@ function Qustion() {
   function formChange() {
     if (checked===0) { 
       return (
-        <form id="inputForm" onSubmit={onSubmitHandler} className="flex flex-col justify-center items-center gap-4 w-full px-6">
+        // <form id="inputForm" onSubmit={onSubmitHandler} className="flex flex-col justify-center items-center gap-4 w-full px-6">
+        <div className="flex flex-col items-center gap-4 w-full px-6">
         <input
             type="text"
             className="outline outline-offset-2 
@@ -143,8 +147,9 @@ function Qustion() {
                 <AiFillCaretRight />
             </button>
             </div>
-    </form>
-      );
+    {/* </form> */}
+    </div>
+    );
     }
     else if (checked===1) {
       let showWord = question.word
@@ -153,8 +158,6 @@ function Qustion() {
         <form id="inputForm" className="flex flex-col justify-center items-center gap-4 w-full px-6">
             <p className="text-red-500 font-semibold">오답!</p>
             <p className="px-4 rounded-md text-x1 ">{showWord} {"("}{showhanja}{")"}</p>
-            
-
             <div
               className="flex justify-center items-center mt-20
               :text-white transition-colors rounded-md cursor-pointer">
@@ -177,8 +180,6 @@ function Qustion() {
         <form id="inputForm" className="flex flex-col justify-center items-center gap-4 w-full px-6">
             <p className="text-blue-500 font-semibold">정답!</p>
             <p className="px-4 rounded-md text-x1 ">{showWord} {"("}{showhanja}{")"}</p>
-            
-
             <div
               className="flex justify-center items-center mt-20
               :text-white transition-colors rounded-md cursor-pointer">
